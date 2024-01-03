@@ -1,0 +1,12 @@
+# Mac OS X files
+.DS_Store
+
+# editor
+.idea
+.vscode
+
+# 依赖
+node_modules
+
+# 配置文件
+env.json
