@@ -4,7 +4,7 @@ const getLove = require("./love")
 const { getAccessToken, sendTmeplate } = require("./wechat");
 const getConfig = require("./config");
 
-schedule.scheduleJob("0 7 * * *", async () => {
+const app = async () => {
     try {
         let weather = await getWeather();
         let love = await getLove();
@@ -47,4 +47,8 @@ schedule.scheduleJob("0 7 * * *", async () => {
     } catch (error) {
         console.error("运行出错:", error.message);
     }
+}
+
+schedule.scheduleJob("0 7 * * *", () => {
+    app();
 })
