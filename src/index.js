@@ -4,7 +4,7 @@ const getLove = require("./love")
 const { getAccessToken, sendTmeplate } = require("./wechat");
 const getConfig = require("./config");
 
-schedule.scheduleJob("0 7 * * *", async () => {
+async () => {
     try {
         let weather = await getWeather();
         let love = await getLove();
@@ -38,7 +38,7 @@ schedule.scheduleJob("0 7 * * *", async () => {
         if (accessToken != null) {
             let wechatOpenIds = getConfig("wechatOpenId");
             wechatOpenIds.forEach((item) => {
-                body.touser = "onZtU6WCjmcZtIBbAOhfR1xATdlY"
+                body.touser = item
                 // 发送
                 sendTmeplate(accessToken, body)
             })
@@ -47,4 +47,4 @@ schedule.scheduleJob("0 7 * * *", async () => {
     } catch (error) {
         console.error("运行出错:", error.message);
     }
-})
+}
