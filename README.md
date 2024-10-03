@@ -15,3 +15,13 @@ npm install
 # 启动服务
 npm start
 ```
+### 模板消息
+
+> 每日提醒
+
+```
+🤞今天是{{date.DATA}}
+🌤今天天气: {{weather.DATA}}
+🌡当前气温: {{temp.DATA}}度
+🎂距离你的生日还有{{birthdays.DATA}}天
+```
