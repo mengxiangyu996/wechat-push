@@ -5,7 +5,7 @@ import { getEnv } from './env';
 import { getBirthday } from './birthday';
 import moment from 'moment-timezone';
 
-// 使用的是UTC时间，比北京时间慢8小时
+// 需要当前时间减去8小时
 schedule.scheduleJob('0 0 8 * * *', async () => {
 
     try {
