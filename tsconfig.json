@@ -1,17 +1,17 @@
-  {
-    "compilerOptions": {
-      "target": "ES2020", // 或您需要的任何目标版本
-      "outDir": "./dist", // 编译输出目录
-      "rootDir": "./src", // 源文件目录
-      "strict": true,
-      "esModuleInterop": true,
-      "module": "NodeNext",
-      "moduleResolution": "NodeNext"
-    },
-    "include": [
-      "src/**/*"
-    ],
-    "exclude": [
-      "node_modules"
-    ]
-  }
+{
+  "compilerOptions": {
+    "target": "ES2020", // 或您需要的任何目标版本
+    "outDir": "./dist", // 编译输出目录
+    "rootDir": "./src", // 源文件目录
+    "strict": true,
+    "esModuleInterop": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

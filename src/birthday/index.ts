@@ -1,11 +1,12 @@
+import loadConfig, { Config } from "../config";
 import moment from 'moment-timezone';
 import 'moment-lunar';
-import { getEnv } from "./env";
 
 export const getBirthday = (() => {
+    const config: Config = loadConfig();
+
     let birthdayDate: moment.Moment;
-    const birthday = getEnv("birthday") as string;
-    const isLunar = getEnv("isLunar") as boolean;
+    const birthday = config.BIRTHDAY;
 
     // 确保 birthday 是有效日期
     if (!moment(birthday, 'YYYY-MM-DD', true).isValid()) {
@@ -15,7 +16,7 @@ export const getBirthday = (() => {
     // 使用 Asia/Shanghai 时区处理生日
     const timezone = "Asia/Shanghai";
 
-    if (isLunar) {
+    if (config.ISLUNAR) {
         // 使用 moment-lunar 处理阴历
         birthdayDate = moment.tz(birthday, 'YYYY-MM-DD', timezone).lunar();
     } else {

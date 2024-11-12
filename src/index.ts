@@ -1,55 +1,77 @@
-import schedule from 'node-schedule';
-import { getWeather, WeatherNow } from './weather';
-import { getAccessToken, sendTemplate, TemplateMessageBody } from './wechat';
-import { getEnv } from './env';
-import { getBirthday } from './birthday';
+import loadConfig, { Config } from "./config";
+
+import { getWeather } from "./weather";
+import { getBirthday } from "./birthday";
+import { getFood } from "./food";
+import { getAccessToken, sendTemplate, TemplateMessageBody } from "./wechat";
 import moment from 'moment-timezone';
+import schedule from 'node-schedule';
 
-// 需要当前时间减去8小时
-schedule.scheduleJob('0 0 8 * * *', async () => {
-
-    try {
-        const weather: WeatherNow | undefined = await getWeather();
-        const accessToken: string | null = await getAccessToken();
-
-        if (!weather) {
-            console.error("获取天气信息失败");
-            return;
-        }
-
-        const body: TemplateMessageBody = {
-            template_id: "2q-eItdTojWUEBb3rVKFZHZ2SoYkSDXC-YtdgjejHVM",
-            url: "https://weixin.qq.com",
-            data: {
-                date: {
-                    value: moment().tz("Asia/Shanghai").format("YYYY-MM-DD"),
-                },
-                weather: {
-                    value: weather.text,
-                },
-                temp: {
-                    value: weather.temp,
-                },
-                birthdays: {
-                    value: getBirthday(),
-                },
-            },
-        };
-
-        if (accessToken) {
-            const wechatOpenId = getEnv("wechatOpenId");
-            if (wechatOpenId && Array.isArray(wechatOpenId)) {
-                wechatOpenId.forEach((item) => {
-                    body.touser = item;
-                    // 发送
-                    sendTemplate(accessToken, body);
-                });
-            } else {
-                body.touser = wechatOpenId as string;
-                sendTemplate(accessToken, body);
-            }
-        }
-    } catch (error) {
-        console.error("运行出错:", (error as Error).message);
+schedule.scheduleJob("0 0 5 * * *", async () => {
+    
+    const weather = await getWeather();
+    if (!weather) {
+        console.log("获取天气失败");
+        return;
     }
+
+    const birthday = await getBirthday();
+    if (!birthday) {
+        console.log("获取生日失败");
+        return;
+    }
+
+    const food = await getFood();
+    if (!food) {
+        console.log("获取食物失败");
+        return;
+    }
+
+    const accessToken: string | null = await getAccessToken();
+    if (!accessToken) {
+        console.log("获取accessToken失败");
+        return;
+    }
+
+    const config: Config = loadConfig();
+
+    const body: TemplateMessageBody = {
+        template_id: "mpd_S3Lc8hMhi6c25MoIJdGTdxWIEANGkyheRn_qdx4",
+        url: "https://weixin.qq.com",
+        data: {
+            name: {
+                value: config.NAME,
+            },
+            today: {
+                value: moment().format("YYYY-MM-DD"),
+            },
+            city: {
+                value: config.CITY,
+            },
+            weather: {
+                value: weather?.weather,
+            },
+            temperature: {
+                value: weather?.temperature,
+            },
+            sunrise: {
+                value: weather?.sunrise,
+            },
+            sunset: {
+                value: weather?.sunset,
+            },
+            birthday: {
+                value: birthday,
+            },
+            food: {
+                value: food,
+            },
+        }
+    }
+
+    config.WECHAT_OPEN_ID.forEach(async (openId) => {
+        body.touser = openId.trim();
+        await sendTemplate(accessToken, body);
+    })
+
 });
