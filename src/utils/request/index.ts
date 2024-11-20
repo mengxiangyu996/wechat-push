@@ -14,6 +14,10 @@ export const request = async <T>(url: string, method: string, data?: any, config
             method,
             data,
         });
+
+        if (response.status !== 200) {
+            throw new Error(`Request failed with status ${response.status}, message: ${response.statusText}`);
+        }
         
         return response.data as T;
     } catch (error) {
