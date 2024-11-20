@@ -16,7 +16,7 @@ export const getAccessToken = async (): Promise<string | null> => {
     const url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.WECHAT_APP_ID}&secret=${config.WECHAT_APP_SECRET}`;
 
     try {
-        const response: AccessTokenResponse = await request(url, "get");
+        const response: AccessTokenResponse = await request <AccessTokenResponse>(url, "get");
 
         if (response.errcode === undefined) {
             return response.access_token || null; // 确保返回值为 string 或 null

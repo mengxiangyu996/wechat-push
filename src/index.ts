@@ -8,7 +8,7 @@ import moment from 'moment-timezone';
 import schedule from 'node-schedule';
 
 // 时区问题，如果想早上7点推送，则需要设置为23点
-schedule.scheduleJob("0 0 23 * * *", async () => {
+schedule.scheduleJob("*/1 * * * * *", async () => {
     
     const weather = await getWeather();
     if (!weather) {

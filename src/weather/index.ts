@@ -77,7 +77,7 @@ export const getWeather = async (): Promise<Weather | null> => {
     // const clothesUrl = `https://devapi.qweather.com/v7/indices/1d?key=${config.QWEATHER_KEY}&location=${config.QWEATHER_LOCATION_ID}&type=3`;
 
     try {
-        const weatherResponse: WeatherResponse = await request(weatherUrl, "get");
+        const weatherResponse: WeatherResponse = await request <WeatherResponse>(weatherUrl, "get");
         if (weatherResponse.code != "200") {
             console.log("获取天气错误：", weatherResponse.code);
             return null;

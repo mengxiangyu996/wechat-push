@@ -14,8 +14,8 @@ export const request = async <T>(url: string, method: string, data?: any, config
             method,
             data,
         });
-
-        return response as T;
+        
+        return response.data as T;
     } catch (error) {
         throw error;
     }
