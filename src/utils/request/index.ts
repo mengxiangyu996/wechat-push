@@ -1,18 +1,23 @@
-import Fetch from "../../fetch";
+import { createAxiosInstance } from "../../axios";
+import { AxiosConfig } from "../../axios/config";
 
-export default async (url: string, method: string, data: Record<string, any> = {}): Promise<any> => {
+export const request = async <T>(url: string, method: string, data?: any, config?: AxiosConfig): Promise<T> => {
+    // 创建实例
+    let instance = createAxiosInstance(config);
 
-    const fetch = new Fetch(url).setMethod(method);
+    // 将方法转换为大写
+    method = method.toUpperCase();
 
-    if (method.toLowerCase() == "get") {
-        fetch.setParam(data);
-    } else {
-        fetch.setBody(data);
+    try {
+        let response = await instance.request({
+            url,
+            method,
+            data,
+        });
+
+        return response as T;
+    } catch (error) {
+        throw error;
     }
 
-    return fetch.send().then((response: Response) => {
-        return response;
-    }).catch((error: Error) => {
-       throw error;
-    })
 }

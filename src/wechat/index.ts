@@ -1,5 +1,5 @@
 import loadConfig, { Config } from "../config";
-import request from "../utils/request";
+import { request } from "../utils/request";
 
 // 定义微信 API 响应的类型
 interface AccessTokenResponse {

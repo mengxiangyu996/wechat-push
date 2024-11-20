@@ -1,5 +1,5 @@
 import loadConfig, { Config } from "../config";
-import request from "../utils/request";
+import { request } from "../utils/request";
 
 export interface Weather {
     weather: string; // 天气
