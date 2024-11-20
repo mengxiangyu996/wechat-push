@@ -5,9 +5,6 @@ export const request = async <T>(url: string, method: string, data?: any, config
     // 创建实例
     let instance = createAxiosInstance(config);
 
-    // 将方法转换为大写
-    method = method.toUpperCase();
-
     try {
         let response = await instance.request({
             url,
