@@ -44,7 +44,7 @@ schedule.scheduleJob("0 0 23 * * *", async () => {
                 value: config.NAME,
             },
             today: {
-                value: moment().format("YYYY-MM-DD"),
+                value: moment().tz("Asia/Shanghai").format("YYYY-MM-DD"),
             },
             city: {
                 value: config.CITY,
