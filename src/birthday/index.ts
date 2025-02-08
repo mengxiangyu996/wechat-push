@@ -16,13 +16,7 @@ export const getBirthday = (() => {
     // 使用 Asia/Shanghai 时区处理生日
     const timezone = "Asia/Shanghai";
 
-    if (config.ISLUNAR) {
-        // 使用 moment-lunar 处理阴历
-        birthdayDate = moment.tz(birthday, 'YYYY-MM-DD', timezone).lunar();
-    } else {
-        // 如果是阳历
-        birthdayDate = moment.tz(birthday, timezone);
-    }
+    birthdayDate = moment.tz(birthday, timezone);
 
     // 获取当前日期，使用指定时区
     const today = moment.tz(timezone);
