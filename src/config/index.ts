@@ -9,7 +9,6 @@ export interface Config {
     NAME: string;
     CITY: string;
     BIRTHDAY: string;
-    ISLUNAR: boolean;
     FOOD: string[];
 }
 
@@ -22,7 +21,6 @@ interface env {
     NAME: string;
     CITY: string;
     BIRTHDAY: string;
-    ISLUNAR: string;
     FOOD: string;
 }
 
@@ -50,7 +48,6 @@ export default function loadConfig(): Config {
         NAME: envConfig.NAME as string,
         CITY: envConfig.CITY as string,
         BIRTHDAY: envConfig.BIRTHDAY as string,
-        ISLUNAR: envConfig.ISLUNAR == "true",
         FOOD: envConfig.FOOD?.split(",") as string[],
     };
 }
